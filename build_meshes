@@ -1,0 +1,42 @@
+# This demo builds six meshes for an area in Gothenburg.
+
+from dtcc import datasets, Bounds
+
+# Center coordinates (Poseidon statue in Gothenburg)
+x0 = 319995.962899
+y0 = 6399009.716755
+
+# Meshing parameters
+H = 80.0   # domain height
+L = 500.0  # domain size
+h = 5.0    # max mesh size
+d = 1.0    # min building detail
+
+OUTPUT="output/"
+
+# Define bounds
+bounds = Bounds(x0 - 0.5 * L, y0 - 0.5 * L, x0 + 0.5 * L, y0 + 0.5 * L)
+
+# Build terrain surface mesh
+#terrain_mesh = dtcc.datasets.terrain_surface_mesh(bounds=bounds, max_mesh_size=h)
+#terrain_mesh.save(OUTPUT + "terrain_surface_mesh_gbg.xdmf")
+
+# Build city flat mesh
+flat_mesh = datasets.city_flat_mesh(bounds=bounds, max_mesh_size=h, min_building_detail=d)
+flat_mesh.save(OUTPUT + "flat_mesh_gbg.xdmf")
+
+# Build city surface mesh
+surface_mesh = datasets.city_surface_mesh(bounds=bounds, max_mesh_size=h, min_building_detail=d)
+surface_mesh.save(OUTPUT + "surface_mesh_gbg.xdmf")
+
+# Build city surface mesh with flat ground
+surface_mesh_flat = datasets.city_surface_mesh(bounds=bounds, max_mesh_size=h, min_building_detail=d, flat_ground=True)
+surface_mesh_flat.save(OUTPUT + "surface_mesh_flat_gbg.xdmf")
+
+# Build city volume mesh
+#volume_mesh = dtcc.datasets.city_volume_mesh(bounds=bounds, max_mesh_size=h, domain_height=H, min_building_detail=d)
+#volume_mesh.save(OUTPUT + "volume_mesh_gbg.xdmf")
+
+# Build city volume mesh with flat ground
+#volume_mesh_flat = dtcc.datasets.city_volume_mesh(bounds=bounds, max_mesh_size=h, domain_height=H, min_building_detail=d, flat_ground=True)
+#volume_mesh_flat.save(OUTPUT + "volume_mesh_flat_gbg.xdmf")
